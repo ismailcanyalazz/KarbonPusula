@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Açılış zemini: WebView ilk kareyi çizene kadar görünür. Tema rengiyle aynı
+  zemin ve ortada pusula simgesi — bu sayede uygulama beyaz bir yanıp sönmeyle
+  değil, kendi kimliğiyle açılır.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/zemin" />
+
+    <item
+        android:gravity="center"
+        android:width="96dp"
+        android:height="96dp"
+        android:drawable="@drawable/ic_pusula_acilis" />
+
+</layer-list>

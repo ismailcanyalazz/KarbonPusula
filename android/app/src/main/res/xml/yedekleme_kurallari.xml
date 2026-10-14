@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android 11 ve öncesi için otomatik yedekleme kuralları.
+  WebView'un localStorage verisi (ayarlar ve hesap geçmişi) yedeklenir;
+  önbellek ve paylaşım için üretilmiş geçici rapor dosyaları yedeklenmez.
+-->
+<full-backup-content>
+    <include domain="database" path="." />
+    <include domain="file" path="app_webview/" />
+    <exclude domain="file" path="app_webview/Default/Cache/" />
+    <exclude domain="file" path="app_webview/Default/Code Cache/" />
+</full-backup-content>

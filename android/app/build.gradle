@@ -1,0 +1,96 @@
+plugins {
+    id 'com.android.application'
+}
+
+/*
+ * Yayın imzası isteğe bağlıdır.
+ *
+ * android/keystore.properties dosyası varsa yayın (release) APK'sı onunla
+ * imzalanır. Yoksa derleme yine başarılı olur, APK imzasız üretilir —
+ * bitirme projesi sunumu için hata ayıklama (debug) APK'sı yeterlidir.
+ * keystore.properties ve .jks dosyaları .gitignore ile depo dışında tutulur.
+ */
+def imzaDosyasi = rootProject.file('keystore.properties')
+def imzaOzellikleri = new Properties()
+def imzaVar = imzaDosyasi.exists()
+if (imzaVar) {
+    imzaDosyasi.withInputStream { imzaOzellikleri.load(it) }
+}
+
+android {
+    namespace 'com.karbonpusula.app'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.karbonpusula.app'
+        minSdk 24
+        targetSdk 35
+        versionCode 2
+        versionName '2.0.0'
+
+        resourceConfigurations += ['tr']
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    if (imzaVar) {
+        signingConfigs {
+            yayin {
+                storeFile rootProject.file(imzaOzellikleri['storeFile'])
+                storePassword imzaOzellikleri['storePassword']
+                keyAlias imzaOzellikleri['keyAlias']
+                keyPassword imzaOzellikleri['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix '.hata'
+            versionNameSuffix '-hata'
+            minifyEnabled false
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                          'proguard-rules.pro'
+            if (imzaVar) {
+                signingConfig signingConfigs.yayin
+            }
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/*.version', 'META-INF/*.kotlin_module', 'DebugProbesKt.bin']
+        }
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    // WebViewAssetLoader: varlıkları https kaynağında sunar (file:// kullanılmaz)
+    implementation 'androidx.webkit:webkit:1.12.1'
+
+    // AppCompat: DayNight teması ve geriye dönük uyumluluk
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+
+    // FileProvider, ContextCompat, WindowCompat
+    implementation 'androidx.core:core:1.13.1'
+
+    // OnBackPressedDispatcher — modern geri tuşu yönetimi
+    implementation 'androidx.activity:activity:1.9.3'
+}

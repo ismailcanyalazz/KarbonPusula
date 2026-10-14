@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_adi">KarbonPusula</string>
+
+    <!-- Paylaşım ve dosya -->
+    <string name="paylas_baslik">Özeti paylaş</string>
+    <string name="rapor_baslik">Raporu kaydet veya paylaş</string>
+    <string name="rapor_olusturulamadi">Rapor dosyası oluşturulamadı</string>
+    <string name="baglanti_acilamadi">Bağlantıyı açacak bir uygulama bulunamadı</string>
+</resources>

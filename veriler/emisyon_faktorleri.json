@@ -1,0 +1,480 @@
+{
+  "meta": {
+    "surum": "2.0.0",
+    "guncelleme": "2026-10-13",
+    "aciklama": "KarbonPusula uygulamasının tek veri kaynağı. Tüm emisyon faktörleri birincil/kurumsal kaynaklardan alınmıştır. Türetilmiş değerler 'tur: turetilmis' ile işaretlenir ve 'turetme' alanında hesap adımı açıklanır.",
+    "gwp_temeli": "IPCC AR5, GWP-100",
+    "birim": "kg CO₂e / faaliyet birimi"
+  },
+
+  "kaynaklar": {
+    "ember2025": {
+      "ad": "Yearly Electricity Data (2025 yayını, 2024 takvim yılı verisi)",
+      "kurum": "Ember",
+      "yil": "2025 (veri yılı 2024)",
+      "url": "https://ember-energy.org/data/yearly-electricity-data/",
+      "kapsam": "Ülke bazında şebeke elektriği karbon yoğunluğu, yaşam döngüsü (CO₂e) temelli."
+    },
+    "defra2026": {
+      "ad": "UK Government greenhouse gas conversion factors for company reporting (2026)",
+      "kurum": "DESNZ / DEFRA (Birleşik Krallık)",
+      "yil": "2026",
+      "url": "https://www.gov.uk/government/collections/government-conversion-factors-for-company-reporting",
+      "kapsam": "Yakıt, ulaşım, atık ve su için uluslararası kabul görmüş dönüşüm katsayıları. Doğrudan yakıt yanması (Kapsam 1) faktörleri ülkeden bağımsızdır; elektrik içeren faktörler Birleşik Krallık şebekesine özgüdür ve bu uygulamada Türkiye değeriyle yeniden türetilir."
+    },
+    "etkb2024": {
+      "ad": "Türkiye Ulusal Elektrik Şebekesi Emisyon Faktörü Bilgi Formu (ETKB-EVÇED-FRM-039 Rev.03)",
+      "kurum": "T.C. Enerji ve Tabii Kaynaklar Bakanlığı, Enerji Verimliliği ve Çevre Dairesi (EVÇED)",
+      "yil": "2024 yayını, 2021 hesap yılı",
+      "url": "https://enerji.gov.tr/evced-cevre-ve-iklim-ulusal-elektrik-sebekesi-emisyon-faktoru",
+      "kapsam": "UNFCCC CDM Tool 07 v07.0 yöntemiyle işletme marjı (OM) 0,7279 · inşa marjı (BM) 0,3541 · birleşik marj (CM) 0,6345 tCO₂/MWh. Bu değerler proje bazlı emisyon azaltımı (ek-olum) hesapları içindir; bireysel tüketim ayak izinde ortalama şebeke faktörü kullanılır."
+    },
+    "ipcc2014": {
+      "ad": "IPCC AR5 WG3 Annex III: Technology-specific Cost and Performance Parameters — yaşam döngüsü emisyonları",
+      "kurum": "Hükümetlerarası İklim Değişikliği Paneli (IPCC)",
+      "yil": "2014",
+      "url": "https://www.ipcc.ch/site/assets/uploads/2018/02/ipcc_wg3_ar5_annex-iii.pdf",
+      "kapsam": "Elektrik üretim teknolojilerinin yaşam döngüsü sera gazı emisyonları. Çatı tipi fotovoltaik için medyan 41 g CO₂e/kWh."
+    },
+    "poore2018": {
+      "ad": "Reducing food's environmental impacts through producers and consumers",
+      "kurum": "Poore, J. & Nemecek, T. — Science 360(6392), 987–992 (Our World in Data üzerinden yuvarlanmış değerler)",
+      "yil": "2018",
+      "url": "https://ourworldindata.org/environmental-impacts-of-food",
+      "kapsam": "38.700 çiftlik, 119 ülke kapsamlı meta-analiz. Tedarik zincirinin tamamı (arazi kullanımı, çiftlik, yem, işleme, taşıma, perakende, ambalaj)."
+    },
+    "tuik2024": {
+      "ad": "Sera Gazı Emisyon İstatistikleri, 1990–2024",
+      "kurum": "Türkiye İstatistik Kurumu (TÜİK)",
+      "yil": "2026 yayını, 2024 envanter yılı",
+      "url": "https://data.tuik.gov.tr/",
+      "kapsam": "Türkiye toplam sera gazı emisyonu 584,5 Mt CO₂e; kişi başı 6,8 ton CO₂e/yıl (2023: 6,5 ton)."
+    },
+    "mgm2024": {
+      "ad": "Türkiye Yıllık Global Güneş Radyasyonu Analizi (2011–2024)",
+      "kurum": "T.C. Çevre, Şehircilik ve İklim Değişikliği Bakanlığı, Meteoroloji Genel Müdürlüğü (MGM)",
+      "yil": "2025",
+      "url": "https://www.mgm.gov.tr/FILES/resmi-istatistikler/parametreAnalizi/2024-gunes-radyasyonu.pdf",
+      "kapsam": "55 büyük iklim istasyonu ölçümü. Türkiye yıllık ortalama yatay global ışınım 1.581,1 kWh/m² (2011–2024); 2024 yılı 1.620,2 kWh/m²."
+    },
+    "gepa": {
+      "ad": "Türkiye Güneş Enerjisi Potansiyeli Atlası (GEPA) — bölgesel ışınım ve güneşlenme süresi tablosu",
+      "kurum": "T.C. Enerji ve Tabii Kaynaklar Bakanlığı (EİE/YEGM ölçümleri)",
+      "yil": "GEPA",
+      "url": "https://gepa.enerji.gov.tr/MyCalculator/",
+      "kapsam": "Türkiye ortalaması 1.527 kWh/m²·yıl ve 2.737 saat/yıl. Bölgesel değerler yer ölçümlerine dayanır ve modern uydu verilerine göre muhafazakârdır; bu uygulamada bölgeler arası oran için kullanılır."
+    },
+    "worldbank2020": {
+      "ad": "Global Photovoltaic Power Potential by Country",
+      "kurum": "World Bank / ESMAP — Global Solar Atlas (Solargis)",
+      "yil": "2020",
+      "url": "https://globalsolaratlas.info/global-pv-potential-study",
+      "kapsam": "Türkiye pratik PV potansiyeli (Seviye 1 ortalama) 4,32 kWh/kWp·gün ≈ 1.577 kWh/kWp·yıl. Sabit, optimum eğimli, serbest duran monofasiyal kristal silisyum; %3,5 kirlenme + %7,5 diğer kayıp varsayımı."
+    },
+    "ieep2021": {
+      "ad": "Carbon inequality in 2030: Per capita consumption emissions and the 1.5 °C goal",
+      "kurum": "Gore, T. — Institute for European Environmental Policy (IEEP) & Stockholm Environment Institute, Oxfam için",
+      "yil": "2021",
+      "url": "https://ieep.eu/publications/carbon-inequality-in-2030-per-capita-consumption-emissions-and-the-1-5c-goal/",
+      "kapsam": "1,5 °C hedefiyle uyumlu 2030 kişi başı emisyon düzeyi: 2,3 ton CO₂/kişi·yıl."
+    },
+    "edgar2024": {
+      "ad": "EDGAR — Emissions Database for Global Atmospheric Research: GHG emissions of all world countries",
+      "kurum": "Avrupa Komisyonu Ortak Araştırma Merkezi (JRC)",
+      "yil": "2024",
+      "url": "https://edgar.jrc.ec.europa.eu/report_2024",
+      "kapsam": "Küresel toplam sera gazı emisyonundan türetilen dünya kişi başı ortalaması."
+    }
+  },
+
+  "faktorler": {
+    "elektrik_sebeke": {
+      "kategori": "elektrik",
+      "etiket": "Şebeke elektriği (Türkiye)",
+      "deger": 0.47573,
+      "birim_faaliyet": "kWh",
+      "kaynak": "ember2025",
+      "tur": "kaynakli",
+      "kapsam": "Türkiye şebeke karışımı, yaşam döngüsü CO₂e. Üretim karışımındaki yenilenebilir payı arttıkça bu değer düşer.",
+      "alternatif_not": "Proje bazlı azaltım hesaplarında ETKB'nin birleşik marj değeri (0,6345 tCO₂/MWh) kullanılır; bireysel tüketim ayak izi için ortalama şebeke faktörü doğru seçimdir."
+    },
+    "elektrik_yesil_tarife": {
+      "kategori": "elektrik",
+      "etiket": "YEK-G belgeli yenilenebilir elektrik",
+      "deger": 0.0,
+      "birim_faaliyet": "kWh",
+      "kaynak": "etkb2024",
+      "tur": "turetilmis",
+      "turetme": "Piyasa temelli (market-based) muhasebe: YEK-G (Yenilenebilir Enerji Kaynak Garanti Belgesi) ile belgelenen tüketime sıfır emisyon atfedilir. GHG Protocol Scope 2 Guidance ile uyumludur. Konum temelli (location-based) raporlamada şebeke faktörü geçerli kalır.",
+      "kapsam": "Yalnızca YEK-G belgesi / yeşil tarife sözleşmesi varsa seçilmelidir."
+    },
+    "elektrik_ozgun_ges": {
+      "kategori": "elektrik",
+      "etiket": "Öz tüketim (çatı GES) elektriği",
+      "deger": 0.041,
+      "birim_faaliyet": "kWh",
+      "kaynak": "ipcc2014",
+      "tur": "kaynakli",
+      "kapsam": "Çatı tipi fotovoltaik için yaşam döngüsü medyanı 41 g CO₂e/kWh (modül üretimi, kurulum, bakım ve bertaraf dahil; işletmede doğrudan emisyon yoktur)."
+    },
+
+    "dogalgaz_m3": {
+      "kategori": "isinma",
+      "etiket": "Doğal gaz",
+      "deger": 2.02633,
+      "birim_faaliyet": "m³",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Doğrudan yanma (Kapsam 1). Hacim temelli; brüt ısıl değer esaslı."
+    },
+    "dogalgaz_kwh": {
+      "kategori": "isinma",
+      "etiket": "Doğal gaz (pay ölçer · kWh)",
+      "deger": 0.18231,
+      "birim_faaliyet": "kWh",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Merkezî sistemde pay ölçer kWh değeri girilecekse kullanılır."
+    },
+    "lpg_kg": {
+      "kategori": "isinma",
+      "etiket": "LPG / tüpgaz",
+      "deger": 2.938,
+      "birim_faaliyet": "kg",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "DEFRA 2026 LPG litre faktörü 1,55713 kg CO₂e/L; LPG sıvı yoğunluğu 0,53 kg/L kabul edilerek kg bazına çevrildi: 1,55713 ÷ 0,53 = 2,938 kg CO₂e/kg.",
+      "kapsam": "Doğrudan yanma (Kapsam 1). Standart tüpgaz tüpü 12 kg kabul edilir."
+    },
+    "komur_kg": {
+      "kategori": "isinma",
+      "etiket": "Kömür (ev tipi)",
+      "deger": 2.90495,
+      "birim_faaliyet": "kg",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "DEFRA 2026 'coal (domestic)' faktörü 2.904,95234 kg CO₂e/ton değerinin kg bazına çevrilmesi (÷1000).",
+      "kapsam": "Doğrudan yanma (Kapsam 1). Ev tipi kömürün ısıl değeri ve kül oranı türüne göre değişir; linyitte birim ısı başına emisyon daha yüksektir. Kömür ayrıca PM10/PM2.5 ve SO₂ kaynağıdır; hava kalitesi etkisi bu hesabın kapsamında değildir."
+    },
+    "odun_kg": {
+      "kategori": "isinma",
+      "etiket": "Yakacak odun",
+      "deger": 0.0477,
+      "birim_faaliyet": "kg",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "Biyojenik CO₂ (döngüsel karbon) net sıfır kabul edilir; yalnızca eksik yanmadan kaynaklanan CH₄/N₂O sayılır. DEFRA 2026 'wood pellets' faktörü 0,01193 kg CO₂e/kWh ve hava kurusu odunun alt ısıl değeri 4,0 kWh/kg alınarak: 0,01193 × 4,0 = 0,0477 kg CO₂e/kg.",
+      "kapsam": "Sürdürülebilir ormancılık varsayımıyla biyojenik CO₂ hariç. Odun yakımı önemli bir PM2.5 kaynağıdır; hava kalitesi etkisi kapsam dışıdır."
+    },
+
+    "otomobil_benzin_km": {
+      "kategori": "ulasim",
+      "etiket": "Otomobil — benzinli",
+      "deger": 0.16152,
+      "birim_faaliyet": "araç-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Ortalama segment benzinli otomobil, araç-km başına (tek kişi). Aracı paylaşan kişi sayısına bölünerek kişi başı değer bulunur. Motor hacmi bilinmiyorsa DEFRA bu değeri önerir."
+    },
+    "otomobil_dizel_km": {
+      "kategori": "ulasim",
+      "etiket": "Otomobil — dizel",
+      "deger": 0.17265,
+      "birim_faaliyet": "araç-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Ortalama segment dizel otomobil (B7 karışım), araç-km başına (tek kişi)."
+    },
+    "otomobil_hibrit_km": {
+      "kategori": "ulasim",
+      "etiket": "Otomobil — hibrit",
+      "deger": 0.12961,
+      "birim_faaliyet": "araç-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Ortalama hibrit otomobil, araç-km başına (tek kişi)."
+    },
+    "otomobil_lpg_km": {
+      "kategori": "ulasim",
+      "etiket": "Otomobil — LPG",
+      "deger": 0.1526,
+      "birim_faaliyet": "araç-km",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "DEFRA 2026 otogaz LPG faktörü 1,55713 kg CO₂e/L; LPG'li orta sınıf otomobil için 9,8 L/100 km ortalama tüketim kabul edildi: 1,55713 × 0,098 = 0,1526 kg CO₂e/km.",
+      "kapsam": "Tüketim varsayımı içeren türetilmiş değer. Kendi L/100 km değerinizi biliyorsanız 'yakıt miktarı' giriş modu daha doğrudur."
+    },
+    "otomobil_elektrik_km": {
+      "kategori": "ulasim",
+      "etiket": "Otomobil — elektrikli",
+      "deger": 0.08563,
+      "birim_faaliyet": "araç-km",
+      "kaynak": "ember2025",
+      "tur": "turetilmis",
+      "turetme": "DEFRA'nın elektrikli araç faktörü Birleşik Krallık şebekesine özgüdür ve Türkiye için geçersizdir. Türkiye şebeke faktörü 0,47573 kg CO₂e/kWh ve ortalama elektrikli otomobil tüketimi 18 kWh/100 km ile: 0,47573 × 0,18 = 0,08563 kg CO₂e/km.",
+      "kapsam": "Egzozdan (tank-to-wheel) emisyon sıfırdır; değer tamamen elektriğin üretim emisyonundan gelir. Çatı GES veya YEK-G ile şarj edilirse belirgin olarak düşer."
+    },
+    "motosiklet_km": {
+      "kategori": "ulasim",
+      "etiket": "Motosiklet",
+      "deger": 0.11367,
+      "birim_faaliyet": "araç-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Ortalama motosiklet, araç-km başına."
+    },
+    "otobus_sehirici_km": {
+      "kategori": "ulasim",
+      "etiket": "Şehir içi otobüs / dolmuş",
+      "deger": 0.10151,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Yolcu-km başına, ortalama doluluk. Dolmuş/minibüs için de bu değer kullanılır."
+    },
+    "otobus_sehirlerarasi_km": {
+      "kategori": "ulasim",
+      "etiket": "Şehirler arası otobüs",
+      "deger": 0.03948,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Yolcu-km başına; yüksek doluluk ve uzun mesafe."
+    },
+    "tren_km": {
+      "kategori": "ulasim",
+      "etiket": "Tren / YHT",
+      "deger": 0.03092,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Anahat demiryolu, yolcu-km başına."
+    },
+    "metro_km": {
+      "kategori": "ulasim",
+      "etiket": "Metro / tramvay",
+      "deger": 0.02121,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Hafif raylı sistem / tramvay, yolcu-km başına."
+    },
+    "vapur_km": {
+      "kategori": "ulasim",
+      "etiket": "Vapur / deniz otobüsü",
+      "deger": 0.01871,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Yaya yolcu, yolcu-km başına."
+    },
+    "benzin_litre": {
+      "kategori": "ulasim",
+      "etiket": "Benzin",
+      "deger": 2.075,
+      "birim_faaliyet": "litre",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Yakıt miktarı biliniyorsa en doğru yöntem. Pompadan alınan litre üzerinden Kapsam 1."
+    },
+    "dizel_litre": {
+      "kategori": "ulasim",
+      "etiket": "Motorin",
+      "deger": 2.58354,
+      "birim_faaliyet": "litre",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "B7 biyodizel karışımı dahil."
+    },
+    "lpg_litre": {
+      "kategori": "ulasim",
+      "etiket": "Otogaz LPG",
+      "deger": 1.55713,
+      "birim_faaliyet": "litre",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Otogaz litre başına Kapsam 1."
+    },
+
+    "ucus_ichat_km": {
+      "kategori": "ucus",
+      "etiket": "İç hat uçuş",
+      "deger": 0.22928,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Radyatif zorlama (yüksek irtifa etkisi) dahil. Dahil edilmezse 0,13552 kg CO₂e/yolcu-km."
+    },
+    "ucus_kisa_km": {
+      "kategori": "ucus",
+      "etiket": "Kısa menzilli dış hat (ekonomi)",
+      "deger": 0.12576,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Yaklaşık 3.700 km'ye kadar, ekonomi sınıfı, radyatif zorlama dahil."
+    },
+    "ucus_uzun_km": {
+      "kategori": "ucus",
+      "etiket": "Uzun menzilli (ekonomi)",
+      "deger": 0.11704,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "3.700 km üzeri, ekonomi sınıfı, radyatif zorlama dahil."
+    },
+    "ucus_uzun_business_km": {
+      "kategori": "ucus",
+      "etiket": "Uzun menzilli (business)",
+      "deger": 0.3394,
+      "birim_faaliyet": "yolcu-km",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Business sınıfında koltuk başına düşen uçak alanı daha büyük olduğu için faktör ekonomiye göre yaklaşık 2,9 kat. Radyatif zorlama dahil."
+    },
+
+    "atik_depolama_kg": {
+      "kategori": "atik",
+      "etiket": "Düzenli depolama (çöp sahası)",
+      "deger": 0.49729,
+      "birim_faaliyet": "kg",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "DEFRA 2026 'household residual waste — landfill' faktörü 497,28993 kg CO₂e/ton değerinin kg bazına çevrilmesi (÷1000).",
+      "kapsam": "Organik ayrışmadan kaynaklanan metan dahil. Türkiye'de evsel atığın büyük bölümü düzenli depolamaya gitmektedir."
+    },
+    "atik_yakma_kg": {
+      "kategori": "atik",
+      "etiket": "Yakma / enerji geri kazanımı",
+      "deger": 0.00465,
+      "birim_faaliyet": "kg",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "DEFRA 2026 'combustion (energy recovery)' faktörü 4,65358 kg CO₂e/ton değerinin kg bazına çevrilmesi.",
+      "kapsam": "Yalnızca toplama ve taşıma emisyonlarını içerir; yanmadan kaynaklanan emisyon atık sahibine atfedilmez."
+    },
+    "atik_geridonusum_kg": {
+      "kategori": "atik",
+      "etiket": "Geri dönüşüm",
+      "deger": 0.00465,
+      "birim_faaliyet": "kg",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "DEFRA 2026 kapalı döngü geri dönüşüm rotaları (kâğıt/karton, ortalama plastik, karışık metal kutu) 4,65358 kg CO₂e/ton; kg bazına çevrildi.",
+      "kapsam": "Yalnızca toplama ve taşıma. Geri dönüşümün birincil hammadde yerine geçmesinden doğan kazanç (avoided emissions) bu faktöre dahil değildir — yani geri dönüşümün gerçek faydası bu sayıdan büyüktür."
+    },
+    "atik_kompost_kg": {
+      "kategori": "atik",
+      "etiket": "Kompost (organik atık)",
+      "deger": 0.00901,
+      "birim_faaliyet": "kg",
+      "kaynak": "defra2026",
+      "tur": "turetilmis",
+      "turetme": "DEFRA 2026 'food and drink waste — composting' faktörü 9,00687 kg CO₂e/ton; kg bazına çevrildi.",
+      "kapsam": "Toplama, taşıma ve kompostlama süreci."
+    },
+
+    "su_sebeke_m3": {
+      "kategori": "su",
+      "etiket": "Şebeke suyu temini",
+      "deger": 0.1913,
+      "birim_faaliyet": "m³",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Arıtma, basınçlandırma ve dağıtım için harcanan enerji."
+    },
+    "su_atiksu_m3": {
+      "kategori": "su",
+      "etiket": "Atıksu arıtma",
+      "deger": 0.17088,
+      "birim_faaliyet": "m³",
+      "kaynak": "defra2026",
+      "tur": "kaynakli",
+      "kapsam": "Kanalizasyon ve atıksu arıtma tesisi işlemleri."
+    }
+  },
+
+  "beslenme": {
+    "aciklama": "Haftalık porsiyon sayısı × porsiyon ağırlığı × kg başı emisyon faktörü. Porsiyon ağırlıkları TÜBER (Türkiye Beslenme Rehberi) standart porsiyon büyüklükleri esas alınarak seçilmiştir.",
+    "kaynak": "poore2018",
+    "kalemler": [
+      { "anahtar": "kirmizi_et", "etiket": "Kırmızı et (sığır, dana)", "faktor": 60.0, "porsiyon_g": 100, "varsayilan_hafta": 3 },
+      { "anahtar": "kuzu", "etiket": "Kuzu / koyun eti", "faktor": 24.0, "porsiyon_g": 100, "varsayilan_hafta": 1 },
+      { "anahtar": "beyaz_et", "etiket": "Beyaz et (tavuk, hindi)", "faktor": 6.0, "porsiyon_g": 120, "varsayilan_hafta": 3 },
+      { "anahtar": "balik", "etiket": "Balık / deniz ürünü", "faktor": 5.0, "porsiyon_g": 120, "varsayilan_hafta": 1 },
+      { "anahtar": "peynir", "etiket": "Peynir", "faktor": 21.0, "porsiyon_g": 30, "varsayilan_hafta": 10 },
+      { "anahtar": "yumurta", "etiket": "Yumurta", "faktor": 4.5, "porsiyon_g": 55, "varsayilan_hafta": 5 },
+      { "anahtar": "sut", "etiket": "Süt / yoğurt", "faktor": 3.0, "porsiyon_g": 200, "varsayilan_hafta": 7 },
+      { "anahtar": "pirinc", "etiket": "Pirinç / bulgur", "faktor": 4.0, "porsiyon_g": 70, "varsayilan_hafta": 4 },
+      { "anahtar": "ekmek", "etiket": "Ekmek / tahıl", "faktor": 1.4, "porsiyon_g": 150, "varsayilan_hafta": 14 },
+      { "anahtar": "baklagil", "etiket": "Baklagil (mercimek, nohut)", "faktor": 0.9, "porsiyon_g": 80, "varsayilan_hafta": 3 },
+      { "anahtar": "sebze_meyve", "etiket": "Sebze ve meyve", "faktor": 1.0, "porsiyon_g": 250, "varsayilan_hafta": 21 },
+      { "anahtar": "kuruyemis", "etiket": "Kuruyemiş", "faktor": 0.3, "porsiyon_g": 30, "varsayilan_hafta": 3 },
+      { "anahtar": "cikolata", "etiket": "Çikolata", "faktor": 19.0, "porsiyon_g": 25, "varsayilan_hafta": 2 },
+      { "anahtar": "kahve", "etiket": "Kahve (çekirdek eşdeğeri)", "faktor": 17.0, "porsiyon_g": 10, "varsayilan_hafta": 7 }
+    ],
+    "sebze_meyve_notu": "Sebze-meyve için 1,0 kg CO₂e/kg değeri, kaynaktaki domates (1,4), muz (0,7) ve kök sebze (0,4) değerlerinin karma tüketim için yuvarlanmış ortalamasıdır.",
+    "hazir_profiller": {
+      "yuksek_et": { "etiket": "Et ağırlıklı", "carpanlar": { "kirmizi_et": 5, "kuzu": 2, "beyaz_et": 4, "balik": 1, "peynir": 12, "yumurta": 6, "sut": 7, "pirinc": 5, "ekmek": 14, "baklagil": 2, "sebze_meyve": 14, "kuruyemis": 2, "cikolata": 3, "kahve": 7 } },
+      "dengeli": { "etiket": "Dengeli", "carpanlar": { "kirmizi_et": 3, "kuzu": 1, "beyaz_et": 3, "balik": 1, "peynir": 10, "yumurta": 5, "sut": 7, "pirinc": 4, "ekmek": 14, "baklagil": 3, "sebze_meyve": 21, "kuruyemis": 3, "cikolata": 2, "kahve": 7 } },
+      "az_et": { "etiket": "Az etli", "carpanlar": { "kirmizi_et": 1, "kuzu": 0, "beyaz_et": 2, "balik": 2, "peynir": 8, "yumurta": 5, "sut": 7, "pirinc": 4, "ekmek": 14, "baklagil": 5, "sebze_meyve": 25, "kuruyemis": 4, "cikolata": 2, "kahve": 7 } },
+      "vejetaryen": { "etiket": "Vejetaryen", "carpanlar": { "kirmizi_et": 0, "kuzu": 0, "beyaz_et": 0, "balik": 0, "peynir": 10, "yumurta": 6, "sut": 10, "pirinc": 5, "ekmek": 14, "baklagil": 7, "sebze_meyve": 28, "kuruyemis": 5, "cikolata": 2, "kahve": 7 } },
+      "vegan": { "etiket": "Vegan", "carpanlar": { "kirmizi_et": 0, "kuzu": 0, "beyaz_et": 0, "balik": 0, "peynir": 0, "yumurta": 0, "sut": 0, "pirinc": 6, "ekmek": 14, "baklagil": 10, "sebze_meyve": 32, "kuruyemis": 7, "cikolata": 2, "kahve": 7 } }
+    }
+  },
+
+  "gunes": {
+    "yontem": {
+      "formul": "E_yıllık [kWh/kWp·yıl] = GHI [kWh/m²·yıl] × K_eğim × PR",
+      "k_egim": 1.15,
+      "k_egim_aciklama": "Optimum eğimli (30–35°, güney) yüzeyin yatay yüzeye göre ışınım kazancı. Türkiye enlemleri (36–42° K) için tipik değer.",
+      "pr": 0.8,
+      "pr_aciklama": "Performans oranı (Performance Ratio, IEC 61724). Çatı üstü konut tipi kurulum için tipik: sıcaklık kaybı %7–10, evirici %2–4, kablo %1–2, kirlenme %2–3, uyumsuzluk %1–2, gölgelenme ve azimut sapması.",
+      "ulusal_dogrulama": "Ulusal ortalama GHI 1.581 kWh/m²·yıl (MGM 2011–2024) ile: 1.581 × 1,15 × 0,80 = 1.454 kWh/kWp·yıl. World Bank/ESMAP'in Türkiye için verdiği 1.577 kWh/kWp·yıl değeri serbest duran santral içindir; çatı tipi kurulumda daha düşük çıkması beklenir. Bu da yöntemin tutarlı olduğunu gösterir.",
+      "belirsizlik": "Bölgesel değerler ±%10–15 belirsizlik taşır. Kesin fizibilite için PVGIS veya GEPA üzerinden koordinat bazlı sorgu yapılmalıdır; uygulama özgül üretim değerinin elle girilmesine izin verir.",
+      "ozgul_maliyet_tl_kwp": 18000,
+      "ozgul_maliyet_notu": "Konut tipi çatı GES anahtar teslim birim maliyeti için kullanıcının değiştirebileceği başlangıç değeri. Panel, evirici, taşıyıcı konstrüksiyon, kablolama, işçilik ve proje/ruhsat masraflarını kapsar. Piyasa koşullarına göre değişir; kesin teklif alınmalıdır."
+    },
+    "bolgeler": [
+      { "anahtar": "gda", "etiket": "Güneydoğu Anadolu", "ghi": 1460, "guneslenme_saat": 2993, "ozgul_uretim": 1343, "ornek_iller": "Şanlıurfa, Mardin, Diyarbakır, Siirt, Batman, Adıyaman, Gaziantep, Kilis" },
+      { "anahtar": "akdeniz", "etiket": "Akdeniz", "ghi": 1390, "guneslenme_saat": 2956, "ozgul_uretim": 1279, "ornek_iller": "Antalya, Mersin, Adana, Hatay, Isparta, Burdur, Osmaniye, Kahramanmaraş" },
+      { "anahtar": "dogu", "etiket": "Doğu Anadolu", "ghi": 1365, "guneslenme_saat": 2664, "ozgul_uretim": 1256, "ornek_iller": "Van, Erzurum, Malatya, Elazığ, Ağrı, Kars, Muş, Bitlis, Hakkâri, Iğdır, Ardahan, Bingöl, Tunceli, Erzincan" },
+      { "anahtar": "icanadolu", "etiket": "İç Anadolu", "ghi": 1314, "guneslenme_saat": 2628, "ozgul_uretim": 1209, "ornek_iller": "Ankara, Konya, Kayseri, Eskişehir, Sivas, Yozgat, Niğde, Aksaray, Karaman, Kırşehir, Kırıkkale, Nevşehir, Çankırı" },
+      { "anahtar": "ege", "etiket": "Ege", "ghi": 1304, "guneslenme_saat": 2738, "ozgul_uretim": 1200, "ornek_iller": "İzmir, Aydın, Denizli, Manisa, Muğla, Afyonkarahisar, Kütahya, Uşak" },
+      { "anahtar": "marmara", "etiket": "Marmara", "ghi": 1168, "guneslenme_saat": 2409, "ozgul_uretim": 1075, "ornek_iller": "İstanbul, Bursa, Balıkesir, Kocaeli, Tekirdağ, Çanakkale, Edirne, Sakarya, Bilecik, Yalova, Kırklareli" },
+      { "anahtar": "karadeniz", "etiket": "Karadeniz", "ghi": 1120, "guneslenme_saat": 1971, "ozgul_uretim": 1030, "ornek_iller": "Samsun, Trabzon, Ordu, Rize, Zonguldak, Kastamonu, Tokat, Amasya, Çorum, Sinop, Giresun, Artvin, Bartın, Karabük, Düzce, Bolu, Gümüşhane, Bayburt" }
+    ],
+    "panel": {
+      "varsayilan_wp": 550,
+      "wp_aciklama": "Konut tipi monokristal modül gücü. Modül başı alan yaklaşık 2,6 m².",
+      "m2_per_kwp": 6.0,
+      "m2_aciklama": "Çatı üstü kurulumda sıra aralığı, servis yolu ve gölge payı dahil 1 kWp için gereken yaklaşık yatay çatı alanı."
+    }
+  },
+
+  "kiyaslama": {
+    "turkiye_kisi_basi": { "deger": 6.8, "birim": "ton CO₂e/kişi·yıl", "kaynak": "tuik2024", "etiket": "Türkiye ortalaması (2024)" },
+    "dunya_kisi_basi": { "deger": 6.6, "birim": "ton CO₂e/kişi·yıl", "kaynak": "edgar2024", "etiket": "Dünya ortalaması", "not": "Küresel toplam sera gazı emisyonunun dünya nüfusuna bölünmesiyle türetilmiştir (LULUCF hariç)." },
+    "paris_hedefi": { "deger": 2.3, "birim": "ton CO₂/kişi·yıl", "kaynak": "ieep2021", "etiket": "1,5 °C hedefi (2030)" }
+  },
+
+  "oneriler": [
+    { "kategori": "elektrik", "baslik": "Çatı GES ile öz tüketime geç", "metin": "Yıllık elektrik tüketiminizi karşılayacak kWp değerini uygulamanın GES sekmesinden görebilirsiniz. Lisanssız üretimde mahsuplaşma, üretimin tüketimden fazla olduğu ayları sonraki aylara taşımanızı sağlar.", "azaltim_orani": 0.9 },
+    { "kategori": "elektrik", "baslik": "A sınıfı cihaz ve LED aydınlatma", "metin": "Eski buzdolabı ve çamaşır makinesi hane elektriğinin büyük bölümünü tüketir. Akkor/halojen ampulleri LED ile değiştirmek aydınlatma tüketimini yaklaşık %80 azaltır.", "azaltim_orani": 0.15 },
+    { "kategori": "elektrik", "baslik": "YEK-G belgeli yeşil tarife", "metin": "Tedarikçinizden YEK-G (Yenilenebilir Enerji Kaynak Garanti Belgesi) kapsamlı tarife talep edebilirsiniz. Piyasa temelli muhasebede bu tüketim sıfır emisyonlu sayılır.", "azaltim_orani": 1.0 },
+    { "kategori": "isinma", "baslik": "Yalıtım ve ısı geri kazanımı", "metin": "Dış duvar ve çatı yalıtımı ısınma ihtiyacını %25–50 azaltır. Pencere contalarını yenileyin, radyatör arkasına ısı yansıtıcı folyo koyun, kombiyi yıllık bakımdan geçirin.", "azaltim_orani": 0.3 },
+    { "kategori": "isinma", "baslik": "Oda sıcaklığını 1 °C düşür", "metin": "Isıtma sezonunda iç sıcaklığı 1 °C düşürmek yakıt tüketimini yaklaşık %6 azaltır. Kullanılmayan odaların vanalarını kapatın.", "azaltim_orani": 0.06 },
+    { "kategori": "isinma", "baslik": "Isı pompasına geçişi değerlendir", "metin": "Hava kaynaklı ısı pompası (COP 3–4) bir birim elektrikle 3–4 birim ısı sağlar. Doğal gaz kombisi yerine kullanıldığında ve çatı GES ile birleştirildiğinde ısınma emisyonu neredeyse sıfırlanır.", "azaltim_orani": 0.6 },
+    { "kategori": "ulasim", "baslik": "Kısa mesafeleri motorsuz yap", "metin": "5 km altındaki yolculuklarda yürüyüş ve bisiklet, soğukta çalışan motorun en verimsiz olduğu bölümü tamamen ortadan kaldırır.", "azaltim_orani": 0.2 },
+    { "kategori": "ulasim", "baslik": "Raylı sisteme kaydır", "metin": "Metro/tramvay yolcu-km başına otomobilin yaklaşık sekizde biri kadar emisyona sahiptir. İşe gidiş-dönüşün yarısını raylı sistemle yapmak bile belirgin fark yaratır.", "azaltim_orani": 0.5 },
+    { "kategori": "ulasim", "baslik": "Araç paylaşımı ve lastik basıncı", "metin": "Aracı iki kişiyle paylaşmak kişi başı emisyonu yarıya indirir. Doğru lastik basıncı yakıt tüketimini %3'e kadar düşürür; agresif hızlanma/frenleme ise %15'e kadar artırır.", "azaltim_orani": 0.15 },
+    { "kategori": "ucus", "baslik": "Kısa uçuşları YHT ile değiştir", "metin": "İç hat uçuş yolcu-km başına trenin yaklaşık 7 katıdır. Ankara–İstanbul, Ankara–Konya gibi hatlarda YHT hem daha az emisyonlu hem kapıdan kapıya genellikle benzer süredir.", "azaltim_orani": 0.85 },
+    { "kategori": "ucus", "baslik": "Daha az, daha uzun seyahat", "metin": "Kalkış ve tırmanış bir uçuşun en yakıt yoğun bölümüdür; bu yüzden kısa uçuşlar km başına daha kirlidir. Yılda iki kısa tatil yerine bir uzun tatil toplam uçuş-km'nizi azaltır.", "azaltim_orani": 0.3 },
+    { "kategori": "beslenme", "baslik": "Kırmızı eti haftada bir-iki porsiyona indir", "metin": "Sığır eti kilogram başına 60 kg CO₂e ile gıda zincirinin en yoğun kalemidir; tavukta bu değer 6, baklagilde 0,9'dur. Haftada iki porsiyon kırmızı eti baklagille değiştirmek yılda yüzlerce kg CO₂e tasarruf ettirir.", "azaltim_orani": 0.35 },
+    { "kategori": "beslenme", "baslik": "Gıda israfını önle", "metin": "Satın alınan gıdanın israf edilen kısmı, üretimi için harcanan tüm emisyonu da boşa çıkarır. Haftalık menü planlayın, porsiyonu ihtiyaca göre ayarlayın, artanı dondurun.", "azaltim_orani": 0.2 },
+    { "kategori": "beslenme", "baslik": "Mevsiminde ve yakından al", "metin": "Sera ve uçakla taşınan ürünler mevsimindekine göre kat kat yoğundur. Pazar ve yerel üretici tercihinde taşıma ve soğutma emisyonu düşer.", "azaltim_orani": 0.1 },
+    { "kategori": "atik", "baslik": "Organik atığı kompostla", "metin": "Çöp sahasında ayrışan organik atık metan üretir (kg başına 0,497 kg CO₂e). Aynı atık kompostlandığında bu değer 0,009'a düşer — yaklaşık 55 kat azalma.", "azaltim_orani": 0.7 },
+    { "kategori": "atik", "baslik": "Kaynakta ayrıştır", "metin": "Kâğıt, cam, metal ve plastiği ayrıştırmak hem depolama metanını önler hem birincil hammadde üretimini azaltır. Geri dönüşümün gerçek kazancı bu uygulamada hesaplanan değerden daha büyüktür.", "azaltim_orani": 0.5 },
+    { "kategori": "su", "baslik": "Sıcak su tüketimini azalt", "metin": "Suyun karbon yükü temin ve arıtma enerjisinden gelir; sıcak su kullanımında ayrıca ısıtma yakıtı devreye girer. Tasarruflu duş başlığı ve musluk perlatörü hem su hem yakıt tasarrufu sağlar.", "azaltim_orani": 0.2 }
+  ]
+}

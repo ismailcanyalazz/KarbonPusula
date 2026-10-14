@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Koyu tema karşılıkları — app.css içindeki koyu tema belirteçleriyle aynı. -->
+<resources>
+    <color name="zemin">#090F0E</color>
+    <color name="yuzey">#15201D</color>
+    <color name="marka">#3DD68C</color>
+    <color name="marka_koyu">#56E09C</color>
+    <color name="metin">#EAF2EF</color>
+</resources>

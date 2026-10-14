@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="tr" data-tema-varsayilan="sistem">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f3f6f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#090f0e" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Kaynaklı emisyon faktörleriyle kişisel karbon ayak izi hesaplama ve çatı GES telafi analizi. Tamamen çevrimdışı çalışır.">
+<title>KarbonPusula — Karbon ayak izi hesaplama</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<!--
+  KarbonPusula
+  Yenilenebilir Enerji Teknikerliği bitirme projesi.
+
+  Arayüzün tamamı js/ui.js tarafından oluşturulur; bu dosya yalnızca kabuğu ve
+  betik sırasını tanımlar. Harici kaynak (CDN, yazı tipi, analitik) yoktur —
+  uygulama internet bağlantısı olmadan çalışır ve ağ izni istemez.
+
+  Betik sırası önemlidir:
+    1. veri.js      emisyon faktörleri (JSON'dan otomatik üretilir)
+    2. hesap.js     hesap motoru (arayüzden bağımsız, test edilebilir)
+    3. grafik.js    SVG grafikler
+    4. depolama.js  localStorage katmanı
+    5. ui.js        arayüz — yukarıdakilerin tümünü kullanır
+-->
+
+<div id="uygulama">
+  <noscript>
+    <div style="padding:24px;font:15px/1.6 system-ui,sans-serif">
+      <h1 style="font-size:20px;margin:0 0 8px">KarbonPusula</h1>
+      <p>Bu uygulamanın çalışması için JavaScript gereklidir.</p>
+    </div>
+  </noscript>
+</div>
+
+<script src="js/veri.js"></script>
+<script src="js/hesap.js"></script>
+<script src="js/grafik.js"></script>
+<script src="js/depolama.js"></script>
+<script src="js/ui.js"></script>
+
+</body>
+</html>

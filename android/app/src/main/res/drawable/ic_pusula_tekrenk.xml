@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  KarbonPusula tek renk (monochrome) simgesi — temalı ikon için: pusula kadranı ve kuzeyi gösteren ibre.
+  108×108 uyarlanabilir ikon tuvali; içerik 72dp güvenli alan içinde kalır
+  (merkez 54,54 — ölçek 32 birimlik özgün çizimden 2,25 kat).
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Dış kadran -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4.5"
+        android:fillColor="#00000000"
+        android:pathData="M 54,22.5 A 31.5,31.5 0 1 1 53.99,22.5 Z" />
+
+    <!-- İç kadran -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2"
+        android:strokeAlpha="0.42"
+        android:fillColor="#00000000"
+        android:pathData="M 54,32.6 A 21.4,21.4 0 1 1 53.99,32.6 Z" />
+
+    <!-- İbre -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,32.6 L61.6,54 L54,75.4 L46.4,54 Z" />
+
+    <!-- Mil -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M 54,49.5 A 4.5,4.5 0 1 1 53.99,49.5 Z" />
+
+</vector>

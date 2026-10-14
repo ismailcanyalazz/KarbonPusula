@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Android tarafındaki renkler, assets/css/app.css içindeki belirteçlerle
+  birebir aynıdır ve birlikte güncellenmelidir:
+    zemin ile plane, marka ile brand, yuzey ile surface belirteçleri eşleşir.
+-->
+<resources>
+    <!-- Açık tema (varsayılan) -->
+    <color name="zemin">#F3F6F4</color>
+    <color name="yuzey">#FFFFFF</color>
+    <color name="marka">#0E9F63</color>
+    <color name="marka_koyu">#0B8553</color>
+    <color name="metin">#0C1715</color>
+
+    <!-- Uygulama ikonu — her iki temada aynı -->
+    <color name="ikon_zemin">#0C1715</color>
+    <color name="ikon_marka">#3DD68C</color>
+</resources>

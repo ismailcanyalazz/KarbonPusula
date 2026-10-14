@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider'ın dışarıya açtığı tek dizin: önbellekteki "paylasim" klasörü.
+  Rapor dosyaları buraya yazılır ve paylaşım sayfasına yalnızca tek seferlik
+  okuma iziyle verilir. Uygulamanın başka hiçbir dosyası paylaşılamaz ve
+  depolama izni gerekmez.
+-->
+<paths>
+    <cache-path name="raporlar" path="paylasim/" />
+</paths>

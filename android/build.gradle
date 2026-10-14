@@ -1,0 +1,10 @@
+// KarbonPusula — kök derleme betiği
+// Eklenti sürümleri burada tanımlanır, modüllerde yalnızca uygulanır.
+plugins {
+    id 'com.android.application' version '8.7.3' apply false
+}
+
+tasks.register('temizle', Delete) {
+    description = 'Tüm derleme çıktılarını siler.'
+    delete rootProject.layout.buildDirectory
+}

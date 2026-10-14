@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  KarbonPusula — Android bildirimi
+
+  İZİN YOKTUR. Uygulama tamamen çevrimdışı çalışır:
+    · INTERNET izni istenmez — hesap için ağ gerekmez, veri dışarı çıkmaz.
+    · Depolama izni istenmez — raporlar FileProvider ile paylaşılır.
+    · Konum, kamera, kişiler gibi hiçbir hassas izin kullanılmaz.
+  Kaynakça bağlantıları cihazın tarayıcısına devredilir; bunun için izin gerekmez.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:name=".KarbonPusulaUygulama"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/yedekleme_kurallari"
+        android:dataExtractionRules="@xml/veri_cikarma_kurallari"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_adi"
+        android:supportsRtl="true"
+        android:theme="@style/Tema.KarbonPusula"
+        android:hardwareAccelerated="true"
+        android:usesCleartextTraffic="false"
+        tools:targetApi="s">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode|smallestScreenSize|density"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="unspecified">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Rapor dosyalarını paylaşmak için; yalnızca önbellekteki paylasim/ dizini açılır -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.dosyalar"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/paylasim_yollari" />
+        </provider>
+
+    </application>
+
+</manifest>

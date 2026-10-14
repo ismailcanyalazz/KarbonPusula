@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Tek bir WebView. Arayüzün tamamı assets/index.html içindedir.
+
+  Kök FrameLayout'un dolgusu MainActivity.bosluklariKur() tarafından sistem
+  çubuklarına ve klavyeye göre ayarlanır; bu yüzden burada sabit bir dolgu
+  tanımlanmaz. Zemin rengi durum çubuğu alanında da görünür.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/kok"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/zemin"
+    android:fitsSystemWindows="false">
+
+    <WebView
+        android:id="@+id/web_gorunum"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
+
+</FrameLayout>
