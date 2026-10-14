@@ -1,0 +1,128 @@
+#
+# KarbonPusula — bulutta otomatik APK derleme
+#
+# Bu iş akışı, bilgisayarınıza Android Studio kurmadan APK üretmenizi sağlar.
+# Projeyi GitHub'a yükledikten sonra her itmede (push) çalışır ve APK dosyasını
+# "Artifacts" bölümüne koyar. Oradan indirip telefona kurabilirsiniz.
+#
+# Elle çalıştırmak için: GitHub > Actions > "APK derle" > "Run workflow"
+#
+# Ayrıntılı anlatım: dokumantasyon/APK_DERLEME_KILAVUZU.md
+#
+
+name: APK derle
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:          # Actions sekmesinden elle başlatma
+
+permissions:
+  contents: read
+
+jobs:
+  testler:
+    name: Hesap motoru testleri
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+
+      - name: Node.js kur
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Python kur
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Veri modülü güncel mi?
+        run: |
+          python3 scripts/veri_uret.py
+          if ! git diff --quiet -- android/app/src/main/assets/js/veri.js; then
+            echo "::error::veri.js, emisyon_faktorleri.json ile uyuşmuyor."
+            echo "Çözüm: 'python3 scripts/veri_uret.py' çalıştırıp sonucu işleyin (commit)."
+            git --no-pager diff --stat -- android/app/src/main/assets/js/veri.js
+            exit 1
+          fi
+          echo "veri.js güncel."
+
+      - name: JavaScript hesap motoru testleri
+        run: node tests/test_hesap.js
+
+      - name: Bağımsız Python doğrulaması
+        run: python3 tests/test_dogrulama.py
+
+  derle:
+    name: APK üret
+    needs: testler
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v4
+
+      - name: JDK 17 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Gradle kur ve önbelleğe al
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: gradlew çalıştırılabilir olsun
+        run: chmod +x ./gradlew
+        working-directory: android
+
+      - name: Hata ayıklama APK'sı (telefona doğrudan kurulabilir)
+        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
+        working-directory: android
+
+      - name: Yayın APK'sı (imzasız)
+        run: ./gradlew :app:assembleRelease --no-daemon --stacktrace
+        working-directory: android
+        continue-on-error: true
+
+      - name: Lint raporu
+        run: ./gradlew :app:lintDebug --no-daemon
+        working-directory: android
+        continue-on-error: true
+
+      - name: APK'ları yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: KarbonPusula-APK
+          path: |
+            android/app/build/outputs/apk/debug/*.apk
+            android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Lint raporunu yükle
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lint-raporu
+          path: android/app/build/reports/lint-results-*.html
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Özet
+        if: always()
+        run: |
+          {
+            echo "## KarbonPusula derleme sonucu"
+            echo ""
+            echo "Üretilen dosyalar:"
+            echo ""
+            echo '```'
+            find android/app/build/outputs/apk -name '*.apk' -printf '%f  %s bayt\n' 2>/dev/null || echo "APK bulunamadı"
+            echo '```'
+            echo ""
+            echo "APK'yı indirmek için bu sayfanın altındaki **Artifacts** bölümünden"
+            echo "**KarbonPusula-APK** dosyasını indirin."
+          } >> "$GITHUB_STEP_SUMMARY"
