@@ -20,7 +20,7 @@ on:
   workflow_dispatch:          # Actions sekmesinden elle başlatma
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   testler:
@@ -149,3 +149,11 @@ jobs:
             echo "APK'yı indirmek için bu sayfanın altındaki **Artifacts** bölümünden"
             echo "**KarbonPusula-APK** dosyasını indirin."
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Telefona kurulabilir surumu yayimla
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: son-surum
+          name: KarbonPusula - son derleme
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+          body: Telefonunuzdan asagidaki .apk dosyasina dokunarak dogrudan kurabilirsiniz. Bilgisayar gerekmez.
