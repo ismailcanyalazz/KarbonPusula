@@ -79,8 +79,31 @@ jobs:
         working-directory: android
 
       - name: Hata ayıklama APK'sı (telefona doğrudan kurulabilir)
-        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee /tmp/gradle-debug.log
         working-directory: android
+
+      # Derleme başarısız olursa hatayı iş özetine yazar. Actions günlük
+      # görüntüleyicisi her ortamda açılmayabildiği için hata burada da görünür.
+      - name: Hata özeti
+        if: failure()
+        run: |
+          {
+            echo "## Gradle derleme hatası"
+            echo ""
+            echo '```'
+            if [ -f /tmp/gradle-debug.log ]; then
+              sed -n '/FAILURE: Build failed/,$p' /tmp/gradle-debug.log | head -80
+              echo ""
+              echo "----- hata satırları -----"
+              grep -iE "error:|e: |Caused by:|> Task .* FAILED|AAPT|Execution failed" \
+                /tmp/gradle-debug.log | head -40
+            else
+              echo "Günlük dosyası oluşmadı."
+            fi
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Yayın APK'sı (imzasız)
         run: ./gradlew :app:assembleRelease --no-daemon --stacktrace
